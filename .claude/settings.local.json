@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create vite@latest organic-demo -- --template react)",
+      "Bash(cmd /c \"node --version && npm --version\")",
+      "Bash(cmd /c \"node -v\")",
+      "Bash(cmd /c \"npm -v\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(cmd /c \"where npm\")",
+      "Bash(cmd /c \"where node\")",
+      "Bash(powershell -Command \"Get-Command npm -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source; Get-Command node -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source\")",
+      "Bash(powershell -Command \"node -v; npm -v\")",
+      "Bash(npm install)",
+      "Bash(powershell -Command \"Set-Location ''C:\\\\Users\\\\blue0\\\\Desktop\\\\demo''; npm install\")",
+      "Bash(powershell -Command \"Get-ChildItem ''C:\\\\Program Files\\\\nodejs\\\\'' -ErrorAction SilentlyContinue | Select-Object Name; Get-ChildItem ''C:\\\\Program Files \\(x86\\)\\\\nodejs\\\\'' -ErrorAction SilentlyContinue | Select-Object Name\")",
+      "Bash(powershell -Command \"Set-Location ''C:\\\\Users\\\\blue0\\\\Desktop\\\\demo''; & ''C:\\\\Program Files\\\\nodejs\\\\npm.cmd'' install\")",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\blue0\\\\Desktop\\\\demo\\\\install.ps1\")",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\blue0\\\\Desktop\\\\demo\\\\dev.ps1\")"
+    ]
+  }
+}
