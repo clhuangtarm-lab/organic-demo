@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import StatusBar from '../components/StatusBar'
 import TopNav from '../components/TopNav'
 import QRCode from '../components/QRCode'
+import GeoIcon from '../components/GeoIcon'
 
 const MOCK_COUPON = {
   id: 'CPN_DEMO001',
   title: 'NT$50 有機體驗折價券',
   discount: 50,
   minOrder: 300,
-  channels: ['全聯福利中心', '主婦聯盟生活消費合作社', '有機田'],
+  channels: ['里仁', '主婦聯盟生活消費合作社'],
   expiry: '2026/06/30',
   status: 'unused',
   createdAt: new Date(Date.now() - 86400000 * 3).toISOString(),
@@ -24,7 +25,6 @@ export default function MyCoupons() {
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem('organic_coupons') || '[]')
-    // Add demo if empty
     if (stored.length === 0) {
       setCoupons([MOCK_COUPON])
     } else {
@@ -37,18 +37,18 @@ export default function MyCoupons() {
   )
 
   const statusLabel = { unused: '未使用', used: '已使用', expired: '已過期' }
-  const statusColor = { unused: '#2d6a4f', used: '#6c757d', expired: '#adb5bd' }
-  const statusBg = { unused: '#d8f3dc', used: '#f0f0f0', expired: '#f8f9fa' }
+  const statusColor = { unused: '#628d3d', used: '#6c757d', expired: '#adb5bd' }
+  const statusBg = { unused: '#dfeaa6', used: '#f0f0f0', expired: '#f8f9fa' }
 
   return (
     <>
       <StatusBar />
       <TopNav title="我的折價券" back="/" />
 
-      <div className="page-scroll" style={{ background: '#f0faf4' }}>
+      <div className="page-scroll" style={{ background: '#f5f7e8' }}>
         {/* Summary bar */}
         <div style={{
-          background: 'linear-gradient(135deg, #1b4332, #2d6a4f)',
+          background: 'linear-gradient(135deg, #665048, #628d3d)',
           padding: '20px 24px'
         }}>
           <div style={{
@@ -71,7 +71,7 @@ export default function MyCoupons() {
                 }}
               >
                 <div style={{ fontSize: '1.6rem', fontWeight: 900, color: '#fff' }}>{s.val}</div>
-                <div style={{ fontSize: '0.75rem', color: '#b7e4c7' }}>{s.label}</div>
+                <div style={{ fontSize: '0.75rem', color: '#dfeaa6' }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -84,8 +84,10 @@ export default function MyCoupons() {
               textAlign: 'center', padding: '48px 20px',
               color: '#adb5bd'
             }}>
-              <div style={{ fontSize: '3rem', marginBottom: 12 }}>🎟️</div>
-              <div style={{ fontWeight: 600, marginBottom: 6 }}>尚無折價券</div>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 12 }}>
+                <GeoIcon type="ticket" size={56} />
+              </div>
+              <div style={{ fontWeight: 600, marginBottom: 6, color: '#665048' }}>尚無折價券</div>
               <p style={{ fontSize: '0.85rem', lineHeight: 1.5 }}>
                 完成有機知識任務後即可領取折價券
               </p>
@@ -121,16 +123,15 @@ export default function MyCoupons() {
                 >
                   <div style={{
                     width: 56, height: 56, flexShrink: 0,
-                    background: coupon.status === 'unused' ? '#d8f3dc' : '#f0f0f0',
+                    background: coupon.status === 'unused' ? '#dfeaa6' : '#f0f0f0',
                     borderRadius: 14,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '1.5rem'
                   }}>
-                    {coupon.status === 'unused' ? '🎁' : '✅'}
+                    <GeoIcon type={coupon.status === 'unused' ? 'gift' : 'check'} size={32} />
                   </div>
 
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 700, fontSize: '1rem', color: '#1b4332', marginBottom: 4 }}>
+                    <div style={{ fontWeight: 700, fontSize: '1rem', color: '#665048', marginBottom: 4 }}>
                       {coupon.title}
                     </div>
                     <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -148,7 +149,7 @@ export default function MyCoupons() {
 
                   <div style={{
                     fontSize: '1.5rem', fontWeight: 900,
-                    color: '#2d6a4f', flexShrink: 0
+                    color: '#628d3d', flexShrink: 0
                   }}>
                     $50
                   </div>
@@ -157,11 +158,10 @@ export default function MyCoupons() {
                 {/* Expanded QR */}
                 {expanded === coupon.id && (
                   <div style={{
-                    borderTop: '1.5px dashed #e9ecef',
+                    borderTop: '1.5px dashed #dfeaa6',
                     padding: '20px',
-                    background: '#f8f9fa'
+                    background: '#f5f7e8'
                   }}>
-                    {/* Holes */}
                     <div style={{ textAlign: 'center', marginBottom: 16 }}>
                       <QRCode data={coupon.qrData} size={160} />
                       <div style={{
@@ -172,16 +172,16 @@ export default function MyCoupons() {
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                       {[
-                        { icon: '🛒', label: '適用通路', val: coupon.channels.join(' / ') },
-                        { icon: '📅', label: '有效期限', val: coupon.expiry },
-                        { icon: '💰', label: '使用門檻', val: `消費滿 NT$${coupon.minOrder}` },
-                        { icon: '💳', label: '券號', val: coupon.id },
+                        { iconType: 'store', label: '適用通路', val: coupon.channels.join(' / ') },
+                        { iconType: 'calendar', label: '有效期限', val: coupon.expiry },
+                        { iconType: 'tag', label: '使用門檻', val: `消費滿 NT$${coupon.minOrder}` },
+                        { iconType: 'ticket', label: '券號', val: coupon.id },
                       ].map(info => (
                         <div key={info.label} style={{
                           display: 'flex', gap: 10, alignItems: 'flex-start',
                           background: '#fff', borderRadius: 10, padding: '10px 12px'
                         }}>
-                          <span style={{ fontSize: '1rem', flexShrink: 0 }}>{info.icon}</span>
+                          <GeoIcon type={info.iconType} size={18} />
                           <div>
                             <div style={{ fontSize: '0.72rem', color: '#6c757d' }}>{info.label}</div>
                             <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#212529', marginTop: 1 }}>
@@ -193,9 +193,10 @@ export default function MyCoupons() {
                     </div>
 
                     <div style={{
-                      background: '#fff3cd', borderRadius: 10,
+                      background: '#fceef5', borderRadius: 10,
                       padding: '10px 12px', marginTop: 10,
-                      fontSize: '0.78rem', color: '#856404', lineHeight: 1.5
+                      fontSize: '0.78rem', color: '#665048', lineHeight: 1.5,
+                      border: '1px solid #f2cedd'
                     }}>
                       ⚠️ 使用時請出示 QR Code 給收銀員掃描，每張限用一次。
                     </div>
@@ -208,8 +209,8 @@ export default function MyCoupons() {
           {/* Earn more */}
           <div
             style={{
-              background: 'linear-gradient(135deg, #f0fdf4, #d8f3dc)',
-              border: '1.5px dashed #52b788',
+              background: 'linear-gradient(135deg, #f5f7e8, #dfeaa6)',
+              border: '1.5px dashed #96b23c',
               borderRadius: 16, padding: '16px 20px',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               cursor: 'pointer'
@@ -217,10 +218,10 @@ export default function MyCoupons() {
             onClick={() => navigate('/scenario')}
           >
             <div>
-              <div style={{ fontWeight: 700, color: '#1b4332', marginBottom: 2 }}>再做一次任務</div>
-              <div style={{ fontSize: '0.78rem', color: '#2d6a4f' }}>完成知識任務獲得更多折券</div>
+              <div style={{ fontWeight: 700, color: '#665048', marginBottom: 2 }}>再做一次任務</div>
+              <div style={{ fontSize: '0.78rem', color: '#628d3d' }}>完成知識任務獲得更多折券</div>
             </div>
-            <span style={{ fontSize: '1.5rem' }}>➕</span>
+            <GeoIcon type="leaf" size={32} />
           </div>
         </div>
       </div>

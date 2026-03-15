@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import StatusBar from '../components/StatusBar'
 import QRCode from '../components/QRCode'
+import GeoIcon from '../components/GeoIcon'
 
 export default function CouponSuccess() {
   const navigate = useNavigate()
@@ -16,26 +17,36 @@ export default function CouponSuccess() {
     <>
       <StatusBar />
 
-      <div className="page-scroll" style={{ background: '#f0faf4' }}>
+      <div className="page-scroll" style={{ background: '#f5f7e8' }}>
         {/* Success top */}
         <div style={{
-          background: 'linear-gradient(135deg, #1b4332, #2d6a4f)',
+          background: 'linear-gradient(135deg, #665048, #628d3d)',
           padding: '28px 24px 48px',
           textAlign: 'center',
           position: 'relative'
         }}>
+          {/* Decorative blob */}
+          <div style={{
+            position: 'absolute', top: 12, right: 16,
+            width: 50, height: 50,
+            background: 'rgba(223,234,166,0.2)',
+            borderRadius: '60% 40% 55% 45%'
+          }} />
+
           <div style={{
             position: 'absolute', bottom: -28, left: '50%', transform: 'translateX(-50%)',
-            width: 56, height: 56, background: '#d8f3dc',
+            width: 56, height: 56, background: '#dfeaa6',
             borderRadius: '50%', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', fontSize: '1.6rem',
-            border: '4px solid #f0faf4', boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
-          }}>✅</div>
+            justifyContent: 'center',
+            border: '4px solid #f5f7e8', boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+          }}>
+            <GeoIcon type="check" size={36} />
+          </div>
 
           <h2 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#fff', marginBottom: 6 }}>
-            🎉 領券成功！
+            領券成功！
           </h2>
-          <p style={{ color: '#b7e4c7', fontSize: '0.9rem' }}>
+          <p style={{ color: '#dfeaa6', fontSize: '0.9rem' }}>
             折價券已存入您的帳戶
           </p>
         </div>
@@ -51,7 +62,7 @@ export default function CouponSuccess() {
           }}>
             {/* Coupon top */}
             <div style={{
-              background: 'linear-gradient(135deg, #2d6a4f, #52b788)',
+              background: 'linear-gradient(135deg, #628d3d, #96b23c)',
               padding: '24px 20px',
               textAlign: 'center',
               position: 'relative'
@@ -63,11 +74,11 @@ export default function CouponSuccess() {
                 padding: '3px 10px', fontSize: '0.7rem', fontWeight: 700
               }}>未使用</div>
 
-              <div style={{ color: '#d8f3dc', fontSize: '0.85rem', marginBottom: 4 }}>有機體驗折價券</div>
+              <div style={{ color: '#dfeaa6', fontSize: '0.85rem', marginBottom: 4 }}>有機體驗折價券</div>
               <div style={{ fontSize: '3rem', fontWeight: 900, color: '#fff', lineHeight: 1 }}>
                 NT$50
               </div>
-              <div style={{ color: '#b7e4c7', fontSize: '0.8rem', marginTop: 6 }}>
+              <div style={{ color: '#dfeaa6', fontSize: '0.8rem', marginTop: 6 }}>
                 滿 NT$300 可使用
               </div>
             </div>
@@ -77,15 +88,15 @@ export default function CouponSuccess() {
               <div style={{
                 position: 'absolute', left: -12, top: -12,
                 width: 24, height: 24, borderRadius: '50%',
-                background: '#f0faf4'
+                background: '#f5f7e8'
               }} />
               <div style={{
                 position: 'absolute', right: -12, top: -12,
                 width: 24, height: 24, borderRadius: '50%',
-                background: '#f0faf4'
+                background: '#f5f7e8'
               }} />
               <div style={{
-                borderTop: '2px dashed #e9ecef',
+                borderTop: '2px dashed #e2e8c0',
                 margin: '0 16px'
               }} />
             </div>
@@ -105,19 +116,22 @@ export default function CouponSuccess() {
                 gap: 12, textAlign: 'left'
               }}>
                 {[
-                  { label: '📅 有效期限', val: coupon.expiry },
-                  { label: '💳 狀態', val: '✅ 未使用' },
-                  { label: '🛒 適用通路', val: coupon.channels.join('、'), full: true },
+                  { label: '有效期限', val: coupon.expiry, icon: 'calendar' },
+                  { label: '狀態', val: '未使用', icon: 'check' },
+                  { label: '適用通路', val: coupon.channels.join('、'), full: true, icon: 'store' },
                 ].map(info => (
                   <div
                     key={info.label}
                     style={{
-                      background: '#f8f9fa',
+                      background: '#f5f7e8',
                       borderRadius: 10, padding: '10px 12px',
                       gridColumn: info.full ? '1/-1' : 'auto'
                     }}
                   >
-                    <div style={{ fontSize: '0.72rem', color: '#6c757d', marginBottom: 3 }}>{info.label}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
+                      <GeoIcon type={info.icon} size={14} />
+                      <span style={{ fontSize: '0.72rem', color: '#6c757d' }}>{info.label}</span>
+                    </div>
                     <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#212529', lineHeight: 1.4 }}>
                       {info.val}
                     </div>
@@ -128,12 +142,12 @@ export default function CouponSuccess() {
 
             {/* How to use */}
             <div style={{
-              borderTop: '1px solid #f0f0f0',
+              borderTop: '1px solid #e8eecb',
               padding: '14px 20px',
-              background: '#f8f9fa'
+              background: '#f5f7e8'
             }}>
-              <div style={{ fontSize: '0.78rem', color: '#6c757d', fontWeight: 700, marginBottom: 6 }}>
-                📋 使用說明
+              <div style={{ fontSize: '0.78rem', color: '#628d3d', fontWeight: 700, marginBottom: 6 }}>
+                使用說明
               </div>
               <ul style={{ paddingLeft: 16, display: 'flex', flexDirection: 'column', gap: 4 }}>
                 {[
@@ -154,7 +168,7 @@ export default function CouponSuccess() {
             className="btn btn-primary btn-full btn-lg"
             onClick={() => navigate('/my-coupons')}
           >
-            查看我的折價券 🎟️
+            查看我的折價券
           </button>
           <button
             className="btn btn-secondary btn-full"

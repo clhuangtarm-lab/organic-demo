@@ -6,13 +6,13 @@
 }
 
 :root {
-  --green-dark:   #1b4332;
-  --green-mid:    #2d6a4f;
-  --green-light:  #52b788;
-  --green-pale:   #d8f3dc;
-  --green-bg:     #f0faf4;
-  --amber:        #f4a261;
-  --amber-dark:   #e76f51;
+  --green-dark:   #665048;
+  --green-mid:    #628d3d;
+  --green-light:  #96b23c;
+  --green-pale:   #dfeaa6;
+  --green-bg:     #f5f7e8;
+  --amber:        #f2cedd;
+  --amber-dark:   #c9889a;
   --white:        #ffffff;
   --gray-100:     #f8f9fa;
   --gray-200:     #e9ecef;
@@ -58,7 +58,7 @@ html, body {
 
 @media (min-width: 480px) {
   #root {
-    background: #c9d6c9;
+    background: #d6dfa8;
     align-items: center;
     padding: 24px 0;
   }
@@ -102,9 +102,9 @@ html, body {
 .btn-primary {
   background: linear-gradient(135deg, var(--green-mid), var(--green-light));
   color: var(--white);
-  box-shadow: 0 4px 14px rgba(45,106,79,0.4);
+  box-shadow: 0 4px 14px rgba(98,141,61,0.4);
 }
-.btn-primary:hover { box-shadow: 0 6px 20px rgba(45,106,79,0.5); }
+.btn-primary:hover { box-shadow: 0 6px 20px rgba(98,141,61,0.5); }
 .btn-secondary {
   background: var(--white);
   color: var(--green-mid);
@@ -113,7 +113,7 @@ html, body {
 .btn-amber {
   background: linear-gradient(135deg, var(--amber), var(--amber-dark));
   color: var(--white);
-  box-shadow: 0 4px 14px rgba(244,162,97,0.4);
+  box-shadow: 0 4px 14px rgba(201,136,154,0.4);
 }
 .btn-ghost {
   background: transparent;
@@ -224,8 +224,8 @@ html, body {
   font-weight: 600;
 }
 .tag-green { background: var(--green-pale); color: var(--green-dark); }
-.tag-amber { background: #fef3e2; color: #a0522d; }
-.tag-blue  { background: #e8f4fd; color: #1565c0; }
+.tag-amber { background: #fceef5; color: var(--amber-dark); }
+.tag-blue  { background: #eef3d8; color: var(--green-mid); }
 
 /* ===== Cards ===== */
 .card {

@@ -93,7 +93,7 @@ export default function QuizPage() {
         <div className="page-scroll">
           <div style={{
             background: passed
-              ? 'linear-gradient(135deg, #1b4332, #40916c)'
+              ? 'linear-gradient(135deg, #665048, #628d3d)'
               : 'linear-gradient(135deg, #c0392b, #e74c3c)',
             padding: '48px 24px',
             textAlign: 'center'
@@ -104,7 +104,7 @@ export default function QuizPage() {
             <h2 style={{ fontSize: '1.8rem', fontWeight: 900, color: '#fff', marginBottom: 8 }}>
               {passed ? '挑戰成功！' : '再試一次！'}
             </h2>
-            <p style={{ color: passed ? '#b7e4c7' : '#ffc9c9', fontSize: '0.95rem' }}>
+            <p style={{ color: passed ? '#dfeaa6' : '#ffc9c9', fontSize: '0.95rem' }}>
               {passed ? `答對 ${score} / ${QUESTIONS.length} 題，達標！` : `答對 ${score} / ${QUESTIONS.length} 題，需答對 2 題以上`}
             </p>
           </div>
@@ -116,9 +116,9 @@ export default function QuizPage() {
               gap: 12, textAlign: 'center'
             }}>
               {[
-                { label: '答對', val: score, color: '#2d6a4f', bg: '#d8f3dc' },
-                { label: '答錯', val: wrongCount, color: '#c0392b', bg: '#fde8e0' },
-                { label: '總題數', val: QUESTIONS.length, color: '#1565c0', bg: '#e8f4fd' },
+                { label: '答對', val: score, color: '#628d3d', bg: '#dfeaa6' },
+                { label: '答錯', val: wrongCount, color: '#c0392b', bg: '#fce8ef' },
+                { label: '總題數', val: QUESTIONS.length, color: '#628d3d', bg: '#eef3d8' },
               ].map(s => (
                 <div key={s.label} style={{
                   background: s.bg, borderRadius: 14, padding: '16px 8px'
@@ -131,10 +131,10 @@ export default function QuizPage() {
 
             {passed ? (
               <>
-                <div className="card card-pad" style={{ borderLeft: '4px solid #52b788' }}>
-                  <h4 style={{ fontWeight: 700, color: '#1b4332', marginBottom: 6 }}>🎁 恭喜！您已解鎖</h4>
+                <div className="card card-pad" style={{ borderLeft: '4px solid #96b23c' }}>
+                  <h4 style={{ fontWeight: 700, color: '#665048', marginBottom: 6 }}>恭喜！您已解鎖</h4>
                   <p style={{ fontSize: '0.85rem', color: '#495057' }}>
-                    NT$50 有機體驗折價券，可於全聯、主婦聯盟等指定通路使用。
+                    NT$50 有機體驗折價券，可於里仁、主婦聯盟等指定通路使用。
                   </p>
                 </div>
                 <button
@@ -146,8 +146,8 @@ export default function QuizPage() {
               </>
             ) : (
               <>
-                <div className="card card-pad" style={{ borderLeft: '4px solid #f4a261' }}>
-                  <h4 style={{ fontWeight: 700, color: '#e76f51', marginBottom: 6 }}>📚 加油！</h4>
+                <div className="card card-pad" style={{ borderLeft: '4px solid #c9889a' }}>
+                  <h4 style={{ fontWeight: 700, color: '#c9889a', marginBottom: 6 }}>加油！</h4>
                   <p style={{ fontSize: '0.85rem', color: '#495057' }}>
                     回到知識頁重新學習，再次挑戰即可領取折價券。
                   </p>
@@ -175,7 +175,7 @@ export default function QuizPage() {
       <div className="page-scroll">
         {/* Question */}
         <div style={{
-          background: 'linear-gradient(135deg, #1b4332, #2d6a4f)',
+          background: 'linear-gradient(135deg, #665048, #628d3d)',
           padding: '24px 20px'
         }}>
           <div style={{
@@ -199,12 +199,12 @@ export default function QuizPage() {
             let bg = '#fff', border = '#e9ecef', color = '#212529', icon = null
             if (confirmed) {
               if (i === q.answer) {
-                bg = '#d8f3dc'; border = '#52b788'; color = '#1b4332'; icon = '✅'
+                bg = '#dfeaa6'; border = '#96b23c'; color = '#665048'; icon = '✅'
               } else if (i === selected && i !== q.answer) {
-                bg = '#fde8e0'; border = '#f4a261'; color = '#a0522d'; icon = '❌'
+                bg = '#fce8ef'; border = '#c9889a'; color = '#665048'; icon = '❌'
               }
             } else if (selected === i) {
-              bg = '#f0fdf4'; border = '#2d6a4f'; color = '#1b4332'
+              bg = '#f5f7e8'; border = '#628d3d'; color = '#665048'
             }
 
             return (
@@ -226,7 +226,7 @@ export default function QuizPage() {
                 <span style={{
                   width: 28, height: 28, flexShrink: 0,
                   borderRadius: '50%',
-                  background: selected === i && !confirmed ? '#2d6a4f' : 'rgba(0,0,0,0.06)',
+                  background: selected === i && !confirmed ? '#628d3d' : 'rgba(0,0,0,0.06)',
                   color: selected === i && !confirmed ? '#fff' : '#555',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontSize: '0.75rem', fontWeight: 700
@@ -241,12 +241,12 @@ export default function QuizPage() {
           {/* Explanation */}
           {confirmed && (
             <div style={{
-              background: isCorrect ? '#d8f3dc' : '#fde8e0',
-              border: `1.5px solid ${isCorrect ? '#52b788' : '#f4a261'}`,
+              background: isCorrect ? '#dfeaa6' : '#fce8ef',
+              border: `1.5px solid ${isCorrect ? '#96b23c' : '#c9889a'}`,
               borderRadius: 14, padding: '14px 16px',
               marginTop: 4
             }}>
-              <div style={{ fontWeight: 700, color: isCorrect ? '#1b4332' : '#a0522d', marginBottom: 6 }}>
+              <div style={{ fontWeight: 700, color: isCorrect ? '#665048' : '#665048', marginBottom: 6 }}>
                 {isCorrect ? '✅ 答對了！' : '❌ 答錯了'}
               </div>
               <p style={{ fontSize: '0.83rem', color: '#495057', lineHeight: 1.55 }}>{q.explain}</p>
@@ -282,7 +282,7 @@ export default function QuizPage() {
             {QUESTIONS.map((_, i) => (
               <div key={i} style={{
                 width: 8, height: 8, borderRadius: '50%',
-                background: i < current ? '#52b788' : i === current ? '#2d6a4f' : '#e9ecef',
+                background: i < current ? '#96b23c' : i === current ? '#628d3d' : '#e9ecef',
                 transition: '0.3s'
               }} />
             ))}

@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import StatusBar from '../components/StatusBar'
 import ProgressBar from '../components/ProgressBar'
+import GeoIcon from '../components/GeoIcon'
 
 export default function TaskComplete() {
   const navigate = useNavigate()
@@ -8,13 +9,12 @@ export default function TaskComplete() {
   const score = location.state?.score ?? 3
 
   const handleClaim = () => {
-    // Create coupon in localStorage
     const coupon = {
       id: 'CPN' + Date.now(),
       title: 'NT$50 有機體驗折價券',
       discount: 50,
       minOrder: 300,
-      channels: ['全聯福利中心', '主婦聯盟生活消費合作社', '有機田'],
+      channels: ['里仁', '主婦聯盟生活消費合作社'],
       expiry: '2026/06/30',
       status: 'unused',
       createdAt: new Date().toISOString(),
@@ -33,7 +33,7 @@ export default function TaskComplete() {
 
       <div style={{
         flex: 1, display: 'flex', flexDirection: 'column',
-        background: 'linear-gradient(160deg, #1b4332 0%, #2d6a4f 40%, #52b788 100%)',
+        background: 'linear-gradient(160deg, #665048 0%, #628d3d 40%, #96b23c 100%)',
         minHeight: 'calc(100dvh - 94px)',
         padding: '0 0 32px'
       }}>
@@ -47,31 +47,28 @@ export default function TaskComplete() {
           <div style={{
             width: 120, height: 120,
             background: 'rgba(255,255,255,0.15)',
-            borderRadius: '50%',
+            borderRadius: '38% 62% 55% 45% / 45% 40% 60% 55%',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '3.5rem',
             marginBottom: 24,
             border: '3px solid rgba(255,255,255,0.3)'
           }}>
-            🏆
+            <GeoIcon type="trophy" size={64} />
           </div>
 
           <h1 style={{
             fontSize: '2rem', fontWeight: 900,
             color: '#fff', marginBottom: 10, lineHeight: 1.2
           }}>任務完成！</h1>
-          <p style={{ color: '#b7e4c7', fontSize: '1rem', marginBottom: 28 }}>
+          <p style={{ color: '#dfeaa6', fontSize: '1rem', marginBottom: 28 }}>
             答對 <strong style={{ color: '#fff', fontSize: '1.3rem' }}>{score}</strong> / 3 題
           </p>
 
           {/* Stars */}
           <div style={{ display: 'flex', gap: 8, marginBottom: 28 }}>
             {[1, 2, 3].map(i => (
-              <span key={i} style={{
-                fontSize: '2rem',
-                opacity: i <= score ? 1 : 0.3,
-                filter: i <= score ? 'drop-shadow(0 0 8px #ffd700)' : 'none'
-              }}>⭐</span>
+              <div key={i} style={{ opacity: i <= score ? 1 : 0.3 }}>
+                <GeoIcon type={i <= score ? 'star' : 'starEmpty'} size={36} />
+              </div>
             ))}
           </div>
 
@@ -84,17 +81,20 @@ export default function TaskComplete() {
             border: '1.5px solid rgba(255,255,255,0.25)',
             width: '100%', maxWidth: 320, marginBottom: 8
           }}>
-            <div style={{ fontSize: '1rem', color: '#d8f3dc', marginBottom: 8 }}>🎁 您已獲得</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8, justifyContent: 'center' }}>
+              <GeoIcon type="gift" size={20} />
+              <span style={{ fontSize: '1rem', color: '#dfeaa6' }}>您已獲得</span>
+            </div>
             <div style={{ fontSize: '2.2rem', fontWeight: 900, color: '#fff', marginBottom: 6 }}>
               NT$50
             </div>
-            <div style={{ fontSize: '0.9rem', color: '#b7e4c7', marginBottom: 12 }}>
+            <div style={{ fontSize: '0.9rem', color: '#dfeaa6', marginBottom: 12 }}>
               有機體驗折價券
             </div>
             <div style={{
               display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap'
             }}>
-              {['全聯', '主婦聯盟', '有機田'].map(c => (
+              {['里仁', '主婦聯盟'].map(c => (
                 <span key={c} style={{
                   background: 'rgba(255,255,255,0.2)',
                   color: '#fff', borderRadius: 999,
@@ -112,10 +112,10 @@ export default function TaskComplete() {
             gap: 10
           }}>
             {[
-              { icon: '📖', label: '知識學習者', desc: '完成 2 頁知識' },
-              { icon: '🎯', label: '問答達人', desc: `答對 ${score}/3 題` },
-              { icon: '🌱', label: '有機先鋒', desc: '初次體驗有機任務' },
-              { icon: '🎁', label: '優惠獵人', desc: '解鎖折價券' },
+              { iconType: 'book', label: '知識學習者', desc: '完成 2 頁知識' },
+              { iconType: 'quiz', label: '問答達人', desc: `答對 ${score}/3 題` },
+              { iconType: 'organic', label: '有機先鋒', desc: '初次體驗有機任務' },
+              { iconType: 'gift', label: '優惠獵人', desc: '解鎖折價券' },
             ].map(a => (
               <div key={a.label} style={{
                 background: 'rgba(255,255,255,0.1)',
@@ -123,10 +123,10 @@ export default function TaskComplete() {
                 display: 'flex', gap: 10, alignItems: 'center',
                 border: '1px solid rgba(255,255,255,0.15)'
               }}>
-                <span style={{ fontSize: '1.4rem' }}>{a.icon}</span>
+                <GeoIcon type={a.iconType} size={28} />
                 <div>
                   <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#fff' }}>{a.label}</div>
-                  <div style={{ fontSize: '0.7rem', color: '#b7e4c7' }}>{a.desc}</div>
+                  <div style={{ fontSize: '0.7rem', color: '#dfeaa6' }}>{a.desc}</div>
                 </div>
               </div>
             ))}
@@ -140,7 +140,7 @@ export default function TaskComplete() {
             onClick={handleClaim}
             style={{ fontSize: '1.1rem' }}
           >
-            立即領取折價券 🎁
+            立即領取折價券
           </button>
         </div>
       </div>
