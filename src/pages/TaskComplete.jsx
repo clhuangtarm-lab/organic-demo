@@ -5,7 +5,7 @@ import ProgressBar from '../components/ProgressBar'
 import SproutCharacter from '../components/SproutCharacter'
 import {
   getScenarioData, loadBadges, saveBadges,
-  saveCharacterStage, computeCharacterStage, BADGE_DEFS
+  saveCharacterStage, computeCharacterStage, getCharacterStageLabel, BADGE_DEFS
 } from '../data/scenarioData'
 
 // ─────────────────────────────────────────────────────
@@ -185,7 +185,7 @@ function GrowthSVG({ size = 240 }) {
 // ─────────────────────────────────────────────────────
 // Full-screen overlay (position:absolute covers phone-shell)
 // ─────────────────────────────────────────────────────
-function GrowthOverlay({ newStage, stageNames }) {
+function GrowthOverlay({ newStage }) {
   const spDots = [
     { cls: 'tc-sp1', top: '28%', left: '76%', size: 11, color: '#fec126' },
     { cls: 'tc-sp2', top: '32%', left: '12%', size: 9,  color: '#68b04e' },
@@ -230,10 +230,10 @@ function GrowthOverlay({ newStage, stageNames }) {
         pointerEvents: 'none',
       }}>
         <div style={{ fontSize: '1.3rem', fontWeight: 900, color: '#468f37', letterSpacing: 1 }}>
-          {stageNames[newStage]}
+          {getCharacterStageLabel(newStage)}
         </div>
         <div style={{ fontSize: '0.75rem', color: '#adb5bd', marginTop: 4 }}>
-          成長階段 {newStage} / 3
+          成長進度 {newStage} / 9
         </div>
       </div>
     </div>
@@ -259,8 +259,6 @@ export default function TaskComplete() {
   // Compute future character stage after this task completes
   const newStage    = computeCharacterStage({ ...badges, [badgeId]: { version: newVersion } })
 
-  const stageNames        = ['種子', '發芽', '長葉', '開花']
-  const versionStageNames = ['', '發芽', '長葉', '開花']
 
   // Remove overlay from DOM after animation completes
   const [overlayDone, setOverlayDone] = useState(false)
@@ -299,7 +297,7 @@ export default function TaskComplete() {
 
       {/* ── Full-screen growth overlay ── */}
       {!overlayDone && (
-        <GrowthOverlay newStage={newStage} stageNames={stageNames} />
+        <GrowthOverlay newStage={newStage} />
       )}
 
       <div className="page-scroll" style={{ background: '#fff' }}>
@@ -328,10 +326,10 @@ export default function TaskComplete() {
               </div>
               <div className="tc-stage-in" style={{ textAlign: 'center', marginTop: 12 }}>
                 <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#468f37' }}>
-                  {stageNames[newStage]}
+                  {getCharacterStageLabel(newStage)}
                 </div>
                 <div style={{ fontSize: '0.7rem', color: '#adb5bd', marginTop: 5 }}>
-                  成長階段 {newStage} / 3
+                  成長進度 {newStage} / 9
                 </div>
               </div>
             </>
@@ -385,7 +383,7 @@ export default function TaskComplete() {
                 }}>V{newVersion}</span>
               </div>
               <div style={{ fontSize: '0.77rem', color: '#6c757d' }}>
-                {versionStageNames[newVersion]} 階段 · {badgeDef?.desc}
+                {badgeDef?.desc}
               </div>
             </div>
           </div>

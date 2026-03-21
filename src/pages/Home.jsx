@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import StatusBar from '../components/StatusBar'
 import SproutCharacter from '../components/SproutCharacter'
 import GeoIcon from '../components/GeoIcon'
-import { loadBadges, BADGE_DEFS, computeCharacterStage } from '../data/scenarioData'
+import { loadBadges, BADGE_DEFS, computeCharacterStage, getCharacterStageLabel } from '../data/scenarioData'
 
 const HOME_ANIM = `
 @keyframes charFloat {
@@ -106,7 +106,7 @@ export default function Home() {
                 borderRadius: '50%', opacity: 0.3, marginTop: -4
               }} />
               <span style={{ fontSize: '0.72rem', color: '#c4e8b8', fontWeight: 600, marginTop: 6 }}>
-                小芽芽
+                小芽芽 · {getCharacterStageLabel(charStage)}
               </span>
             </div>
           </div>
@@ -185,13 +185,12 @@ export default function Home() {
                 {earnedBadges.map(([id, v]) => {
                   const def = BADGE_DEFS[id]
                   if (!def) return null
-                  const vLabel = ['', '發芽', '長葉', '開花'][v.version] || ''
                   return (
                     <div key={id} style={{ background: '#fff', borderRadius: 10, padding: '8px 12px', border: '1.5px solid #e2f3dc', display: 'flex', alignItems: 'center', gap: 8 }}>
                       <span style={{ fontSize: '1.2rem' }}>{v.version === 3 ? '🌸' : v.version === 2 ? '🌿' : '🌱'}</span>
                       <div>
                         <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#212529' }}>{def.name}</div>
-                        <div style={{ fontSize: '0.68rem', color: '#468f37' }}>V{v.version} · {vLabel}</div>
+                        <div style={{ fontSize: '0.68rem', color: '#468f37' }}>V{v.version}</div>
                       </div>
                     </div>
                   )

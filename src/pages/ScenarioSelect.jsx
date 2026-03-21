@@ -34,7 +34,6 @@ const SCENARIOS = [
   },
 ]
 
-const STAGE_NAMES = ['', '發芽', '長葉', '開花']
 
 export default function ScenarioSelect() {
   const navigate = useNavigate()
@@ -150,7 +149,7 @@ export default function ScenarioSelect() {
                         padding: '4px 10px', borderRadius: 999,
                         border: '1px solid #fec126',
                       }}>
-                        V{currentVersion} · {STAGE_NAMES[currentVersion]}
+                        V{currentVersion}
                       </span>
                     )}
                   </div>

@@ -5,14 +5,14 @@ import TopNav from '../components/TopNav'
 import QRCode from '../components/QRCode'
 import GeoIcon from '../components/GeoIcon'
 import SproutCharacter from '../components/SproutCharacter'
-import { loadCharacterStage, loadBadges, BADGE_DEFS } from '../data/scenarioData'
+import { loadBadges, BADGE_DEFS, computeCharacterStage } from '../data/scenarioData'
 
 const SCENARIO_META = [
   { badgeId: 'pioneer',   name: '體驗先鋒',  group: '活動限定', icon: '⚡', accentColor: '#f05d4d', bgColor: '#fde9e7' },
   { badgeId: 'lifestyle', name: '有機生活家', group: '會員專屬', icon: '🌿', accentColor: '#468f37', bgColor: '#e2f3dc' },
   { badgeId: 'shopper',   name: '消費高手',   group: '商品推薦', icon: '🛒', accentColor: '#fec126', bgColor: '#fff8e0' },
 ]
-const STAGE_NAMES  = ['', '發芽', '長葉', '開花']
+const STAGE_LABELS = ['', '第1階段', '第2階段', '第3階段']
 const STAGE_EMOJIS = ['', '🌱', '🌿', '🌸']
 
 const MOCK_COUPON = {
@@ -33,8 +33,8 @@ export default function MyCoupons() {
   const [activeTab, setActiveTab] = useState('unused')
   const [expanded,  setExpanded]  = useState(null)
 
-  const charStage    = loadCharacterStage()
   const badges       = loadBadges()
+  const charStage    = computeCharacterStage(badges)
   const earnedBadges = Object.entries(badges).filter(([, v]) => v.version > 0)
 
   useEffect(() => {
@@ -79,13 +79,12 @@ export default function MyCoupons() {
             <div style={{ display: 'flex', gap: 10, overflowX: 'auto', paddingBottom: 4 }}>
               {earnedBadges.map(([id, v]) => {
                 const def = BADGE_DEFS[id]; if (!def) return null
-                const stageName = STAGE_NAMES[v.version] || ''
                 return (
                   <div key={id} style={{ flexShrink: 0, background: '#fff8e0', borderRadius: 10, padding: '8px 12px', border: '1.5px solid #fec126', display: 'flex', alignItems: 'center', gap: 8 }}>
                     <span style={{ fontSize: '1.1rem' }}>{STAGE_EMOJIS[v.version]}</span>
                     <div>
                       <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#212529' }}>{def.name}</div>
-                      <div style={{ fontSize: '0.65rem', color: '#6b4800' }}>V{v.version} · {stageName}</div>
+                      <div style={{ fontSize: '0.65rem', color: '#6b4800' }}>V{v.version}</div>
                     </div>
                   </div>
                 )
@@ -120,7 +119,7 @@ export default function MyCoupons() {
                       return (
                         <div key={st} style={{ flex: 1, borderRadius: 8, padding: '6px 4px', textAlign: 'center', background: done ? meta.accentColor === '#fec126' ? '#fff8e0' : meta.bgColor : '#f8f9fa', border: `1.5px solid ${done ? meta.accentColor : '#e9ecef'}`, transition: '0.2s' }}>
                           <div style={{ fontSize: '0.85rem' }}>{done ? STAGE_EMOJIS[st] : '🔒'}</div>
-                          <div style={{ fontSize: '0.62rem', fontWeight: 600, color: done ? '#212529' : '#adb5bd', marginTop: 1 }}>{STAGE_NAMES[st]}</div>
+                          <div style={{ fontSize: '0.62rem', fontWeight: 600, color: done ? '#212529' : '#adb5bd', marginTop: 1 }}>{STAGE_LABELS[st]}</div>
                           <div style={{ fontSize: '0.6rem', color: done ? meta.accentColor : '#dee2e6', fontWeight: 600 }}>
                             {done ? '已解鎖' : '待完成'}
                           </div>

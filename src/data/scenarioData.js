@@ -411,17 +411,22 @@ export function loadCharacterStage() {
   return parseInt(localStorage.getItem('organic_character_stage') || '0', 10)
 }
 export function saveCharacterStage(s) {
-  localStorage.setItem('organic_character_stage', String(Math.min(3, Math.max(0, s))))
+  localStorage.setItem('organic_character_stage', String(Math.min(9, Math.max(0, s))))
 }
 
-// Compute global character stage from total badge completions across all 3 groups
-// total completions: 0 → stage 0 (種子), 1–2 → stage 1 (發芽), 3–5 → stage 2 (長葉), 6–9 → stage 3 (開花)
+// Compute global character stage (0–9) = direct total of all badge versions
+// Three badge groups × max V3 each = max 9 stages
 export function computeCharacterStage(badges) {
-  const total = Object.values(badges).reduce((s, b) => s + (b.version || 0), 0)
-  if (total === 0) return 0
-  if (total <= 2) return 1
-  if (total <= 5) return 2
-  return 3
+  return Object.values(badges).reduce((sum, b) => sum + (b.version || 0), 0)
+}
+
+// Simplified display label for character stage (0–9)
+export function getCharacterStageLabel(stage) {
+  if (stage === 0) return '種子'
+  if (stage <= 2) return '發芽中'
+  if (stage <= 4) return '長葉中'
+  if (stage <= 7) return '成熟中'
+  return '開花'
 }
 
 // Returns the next playable stage number (1–3) for a given badge
