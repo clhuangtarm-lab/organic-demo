@@ -175,7 +175,7 @@ export default function ScenarioSelect() {
             <span style={{ fontSize: '1rem', flexShrink: 0 }}>💡</span>
             <p style={{ fontSize: '0.78rem', color: '#6c757d', lineHeight: 1.55 }}>
               每完成一個階段可獲得 <strong style={{ color: '#468f37' }}>NT$50 有機體驗折價券</strong>，
-              適用於里仁、主婦聯盟。每組完成 3 階段後，小芽芽也會開花。
+              適用於里仁、主婦聯盟。完成全部 9 個任務，小芽芽就能開花。
             </p>
           </div>
         </div>
