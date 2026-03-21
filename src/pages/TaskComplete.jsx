@@ -5,7 +5,7 @@ import ProgressBar from '../components/ProgressBar'
 import SproutCharacter from '../components/SproutCharacter'
 import {
   getScenarioData, loadBadges, saveBadges,
-  loadCharacterStage, saveCharacterStage, BADGE_DEFS
+  saveCharacterStage, computeCharacterStage, BADGE_DEFS
 } from '../data/scenarioData'
 
 // ─────────────────────────────────────────────────────
@@ -253,11 +253,11 @@ export default function TaskComplete() {
   const badgeId   = scenario.badgeId
   const badgeDef  = BADGE_DEFS[badgeId]
 
-  const prevStage   = loadCharacterStage()
-  const newStage    = Math.min(3, prevStage + 1)
   const badges      = loadBadges()
   const prevVersion = badges[badgeId]?.version ?? 0
   const newVersion  = Math.min(3, prevVersion + 1)
+  // Compute future character stage after this task completes
+  const newStage    = computeCharacterStage({ ...badges, [badgeId]: { version: newVersion } })
 
   const stageNames        = ['種子', '發芽', '長葉', '開花']
   const versionStageNames = ['', '發芽', '長葉', '開花']
@@ -270,9 +270,9 @@ export default function TaskComplete() {
   }, [])
 
   const handleClaim = () => {
-    saveCharacterStage(newStage)
     const updatedBadges = { ...badges, [badgeId]: { version: newVersion } }
     saveBadges(updatedBadges)
+    saveCharacterStage(computeCharacterStage(updatedBadges))
     const coupon = {
       id: 'CPN' + Date.now(),
       title: 'NT$50 有機體驗折價券',
