@@ -3,12 +3,12 @@ import StatusBar from '../components/StatusBar'
 import TopNav from '../components/TopNav'
 import ProgressBar from '../components/ProgressBar'
 import SproutCharacter from '../components/SproutCharacter'
-import { getScenarioData, loadCharacterStage } from '../data/scenarioData'
+import { getScenarioData, loadBadges, computeCharacterStage } from '../data/scenarioData'
 
 export default function KnowledgePage1() {
   const navigate = useNavigate()
   const scenario = getScenarioData()
-  const charStage = loadCharacterStage()
+  const charStage = computeCharacterStage(loadBadges())
   const k1 = scenario.knowledge1
 
   return (
