@@ -2,169 +2,191 @@ import { useNavigate } from 'react-router-dom'
 import StatusBar from '../components/StatusBar'
 import TopNav from '../components/TopNav'
 import GeoIcon from '../components/GeoIcon'
+import SproutCharacter from '../components/SproutCharacter'
+import { loadCharacterStage } from '../data/scenarioData'
 
 const SCENARIOS = [
   {
     id: 'event',
-    iconType: 'burst',
+    icon: '⚡',
     badge: '活動限定',
-    badgeColor: '#c9889a',
+    badgeColor: '#f05d4d',
     title: '活動限定體驗',
-    desc: '掃描現場 QR Code 解鎖，完成有機知識挑戰，限時獲得獨家優惠。',
-    highlight: '限時限量',
-    highlightColor: '#fceef5',
-    highlightText: '#c9889a',
-    bg: 'linear-gradient(135deg, #fdf4f7, #f2cedd)',
-    border: '#c9889a',
+    subtitle: '30 秒認識有機農業的關鍵',
+    desc: '完成這個小任務，一起了解有機農業為什麼受到重視。',
+    interactionHint: '左右滑動 · 點選關鍵字',
+    earnBadge: '體驗先鋒',
+    accentColor: '#f05d4d',
+    borderColor: '#fde9e7',
+    bg: '#fff',
   },
   {
     id: 'member',
-    iconType: 'crown',
+    icon: '🌿',
     badge: '會員專屬',
-    badgeColor: '#628d3d',
-    title: '會員專屬有機知識任務',
-    desc: '針對會員設計的深度有機農業知識課程，通過測驗即可獲得額外點數與折券。',
-    highlight: '會員加倍',
-    highlightColor: '#eef3d8',
-    highlightText: '#628d3d',
-    bg: 'linear-gradient(135deg, #f5f7e8, #dfeaa6)',
-    border: '#96b23c',
+    badgeColor: '#468f37',
+    title: '會員專屬有機任務',
+    subtitle: '從日常選擇，認識有機生活',
+    desc: '你每天的消費選擇，也可能影響土地與生產方式。',
+    interactionHint: '情境二選一 · 拖曳配對',
+    earnBadge: '有機生活家',
+    accentColor: '#468f37',
+    borderColor: '#e2f3dc',
+    bg: '#fff',
   },
   {
     id: 'product',
-    iconType: 'shopping',
+    icon: '🛒',
     badge: '商品推薦',
-    badgeColor: '#665048',
-    title: '立即認識今日選購商品',
-    desc: '了解今日主打有機商品的產地、農法與營養知識，知識測驗後享購買優惠。',
-    highlight: '今日特選',
-    highlightColor: '#f0ebe6',
-    highlightText: '#665048',
-    bg: 'linear-gradient(135deg, #f4f0ec, #e8ddd6)',
-    border: '#665048',
+    badgeColor: '#fec126',
+    badgeTextColor: '#6b4800',
+    title: '立即認識今日有機商品',
+    subtitle: '選購有機商品，先看懂這幾件事',
+    desc: '在購買之前，先學會看懂有機商品的重要資訊。',
+    interactionHint: '點選辨識 · 情境二選一',
+    earnBadge: '消費高手',
+    accentColor: '#fec126',
+    borderColor: '#fff8e0',
+    bg: '#fff',
   },
 ]
 
 export default function ScenarioSelect() {
   const navigate = useNavigate()
+  const charStage = loadCharacterStage()
 
-  const handleSelect = (scenario) => {
-    localStorage.setItem('organic_scenario', JSON.stringify(scenario))
+  const handleSelect = (s) => {
+    localStorage.setItem('organic_scenario', JSON.stringify({ id: s.id }))
     navigate('/knowledge/1')
   }
 
   return (
     <>
       <StatusBar />
-      <TopNav title="選擇入口情境" back="/" />
+      <TopNav title="選擇情境" back="/" />
 
-      <div className="page-scroll">
-        <div style={{ padding: '20px 20px 8px' }}>
-          <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#665048', marginBottom: 6 }}>
-            您想透過哪種方式體驗？
-          </h2>
-          <p style={{ fontSize: '0.85rem', color: '#6c757d', lineHeight: 1.5 }}>
-            選擇最符合您目前狀況的情境，開啟專屬有機知識旅程。
+      <div className="page-scroll" style={{ background: '#fff' }}>
+        {/* Character message */}
+        <div style={{
+          margin: '16px 20px 0',
+          background: '#f6fbf4', borderRadius: 12, padding: '12px 14px',
+          display: 'flex', alignItems: 'center', gap: 10,
+          border: '1px solid #e2f3dc'
+        }}>
+          <SproutCharacter stage={charStage} size={40} />
+          <p style={{ fontSize: '0.82rem', color: '#495057', lineHeight: 1.55 }}>
+            今天想從哪一種任務開始？每完成一次任務，我都會長大唷。
           </p>
         </div>
 
-        <div style={{ padding: '12px 20px 32px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div style={{ padding: '16px 20px 8px' }}>
+          <h2 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#212529', marginBottom: 6 }}>
+            選擇你的體驗方式
+          </h2>
+          <p style={{ fontSize: '0.83rem', color: '#6c757d', lineHeight: 1.55 }}>
+            三種情境各有不同題組與徽章，完成後均可獲得折價券。
+          </p>
+        </div>
+
+        <div style={{ padding: '12px 20px 28px', display: 'flex', flexDirection: 'column', gap: 14 }}>
           {SCENARIOS.map((s, i) => (
             <div
               key={s.id}
               onClick={() => handleSelect(s)}
               style={{
                 background: s.bg,
-                border: `2px solid ${s.border}`,
-                borderRadius: 20,
-                padding: '20px',
+                border: `2px solid ${s.borderColor}`,
+                borderRadius: 18,
+                padding: '18px',
                 cursor: 'pointer',
                 transition: '0.2s',
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
               }}
             >
-              {/* Entrance number */}
-              <span style={{
-                position: 'absolute', top: 14, right: 14,
-                width: 28, height: 28,
-                background: 'rgba(0,0,0,0.06)',
-                borderRadius: '50%',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '0.75rem', fontWeight: 700, color: '#555'
-              }}>
-                {i + 1}
-              </span>
-
+              {/* top row */}
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
-                <div style={{ flexShrink: 0, marginTop: 2 }}>
-                  <GeoIcon type={s.iconType} size={44} />
+                {/* icon */}
+                <div style={{
+                  width: 48, height: 48, flexShrink: 0,
+                  background: s.borderColor, borderRadius: 14,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '1.5rem'
+                }}>
+                  {s.icon}
                 </div>
 
                 <div style={{ flex: 1 }}>
+                  {/* badge + number */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, flexWrap: 'wrap' }}>
                     <span style={{
-                      background: s.badgeColor, color: '#fff',
-                      fontSize: '0.7rem', fontWeight: 700,
+                      background: s.badgeColor, color: s.badgeTextColor || '#fff',
+                      fontSize: '0.68rem', fontWeight: 700,
                       padding: '3px 10px', borderRadius: 999
                     }}>{s.badge}</span>
                     <span style={{
-                      background: s.highlightColor, color: s.highlightText,
-                      fontSize: '0.7rem', fontWeight: 600,
-                      padding: '3px 10px', borderRadius: 999
-                    }}>{s.highlight}</span>
+                      fontSize: '0.68rem', fontWeight: 600, color: '#6c757d'
+                    }}>No.{i + 1}</span>
                   </div>
 
                   <h3 style={{
-                    fontSize: '1rem', fontWeight: 800,
-                    color: '#665048', marginBottom: 6, lineHeight: 1.3
+                    fontSize: '0.97rem', fontWeight: 800,
+                    color: '#212529', marginBottom: 4, lineHeight: 1.3
                   }}>{s.title}</h3>
 
-                  <p style={{
-                    fontSize: '0.82rem', color: '#495057',
-                    lineHeight: 1.55
-                  }}>{s.desc}</p>
+                  <p style={{ fontSize: '0.8rem', color: '#495057', lineHeight: 1.55 }}>
+                    {s.desc}
+                  </p>
                 </div>
               </div>
 
-              {/* Bottom action row */}
+              {/* bottom row */}
               <div style={{
                 marginTop: 14, paddingTop: 12,
-                borderTop: '1px solid rgba(0,0,0,0.07)',
+                borderTop: '1px solid #f0f0f0',
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between'
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: '0.77rem', color: '#555' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                    <GeoIcon type="book" size={16} /> 2頁知識
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ fontSize: '0.75rem', color: '#6c757d', display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <GeoIcon type="book" size={14} /> 2頁知識
                   </span>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                    <GeoIcon type="quiz" size={16} /> 3道問答
+                  <span style={{ fontSize: '0.75rem', color: '#6c757d', display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <GeoIcon type="quiz" size={14} /> 互動任務
                   </span>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                    <GeoIcon type="gift" size={16} /> NT$50券
+                  <span style={{ fontSize: '0.75rem', color: '#6c757d', display: 'flex', alignItems: 'center', gap: 4 }}>
+                    🏅 {s.earnBadge}
                   </span>
                 </div>
-                <span style={{
-                  background: s.badgeColor, color: '#fff',
-                  borderRadius: 999, padding: '6px 16px',
+                <div style={{
+                  background: s.accentColor, color: s.badgeTextColor || '#fff',
+                  borderRadius: 999, padding: '5px 16px',
                   fontSize: '0.82rem', fontWeight: 700
-                }}>選擇 →</span>
+                }}>選擇 →</div>
+              </div>
+
+              {/* interaction hint tag */}
+              <div style={{
+                position: 'absolute', top: 12, right: 14,
+                background: '#f6fbf4', borderRadius: 999,
+                padding: '3px 10px', fontSize: '0.65rem',
+                color: '#468f37', fontWeight: 600,
+                border: '1px solid #e2f3dc'
+              }}>
+                {s.interactionHint}
               </div>
             </div>
           ))}
 
-          {/* Tips */}
+          {/* tips */}
           <div style={{
-            background: '#f5f7e8',
-            border: '1px solid #dfeaa6',
-            borderRadius: 14,
-            padding: '14px 16px',
+            background: '#f6fbf4', border: '1px solid #e2f3dc',
+            borderRadius: 12, padding: '12px 14px',
             display: 'flex', gap: 10, alignItems: 'flex-start'
           }}>
-            <GeoIcon type="leaf" size={20} />
-            <p style={{ fontSize: '0.8rem', color: '#6c757d', lineHeight: 1.55 }}>
-              三種情境完成後均可獲得 <strong style={{ color: '#628d3d' }}>NT$50 有機體驗折價券</strong>，
-              每人限領一次，可於里仁、主婦聯盟等指定通路使用。
+            <span style={{ fontSize: '1rem', flexShrink: 0 }}>💡</span>
+            <p style={{ fontSize: '0.78rem', color: '#6c757d', lineHeight: 1.55 }}>
+              完成任意一組任務可獲得 <strong style={{ color: '#468f37' }}>NT$50 有機體驗折價券</strong>，
+              適用於里仁、主婦聯盟。每組完成後角色成長，徽章也會升級。
             </p>
           </div>
         </div>
