@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import StatusBar from '../components/StatusBar'
 import ProgressBar from '../components/ProgressBar'
 import SproutCharacter from '../components/SproutCharacter'
@@ -217,10 +217,6 @@ function GrowthOverlay({ oldStage, newStage }) {
 // ─────────────────────────────────────────────────────
 export default function TaskComplete() {
   const navigate = useNavigate()
-  const location = useLocation()
-  const score = location.state?.score ?? 2
-  const total = location.state?.total ?? 2
-
   const scenario  = getScenarioData()
   const badgeId   = scenario.badgeId
   const badgeDef  = BADGE_DEFS[badgeId]
@@ -347,24 +343,6 @@ export default function TaskComplete() {
                 {badgeDef?.desc}
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Score */}
-        <div style={{ padding: '14px 20px 0' }}>
-          <div style={{ display: 'flex', gap: 10 }}>
-            {[
-              { label: '完成任務', val: total },
-              { label: '正確回答', val: score },
-            ].map(s => (
-              <div key={s.label} style={{
-                flex: 1, background: '#e2f3dc', borderRadius: 12,
-                padding: '14px', textAlign: 'center'
-              }}>
-                <div style={{ fontSize: '1.6rem', fontWeight: 900, color: '#2f6624' }}>{s.val}</div>
-                <div style={{ fontSize: '0.72rem', color: '#6c757d', marginTop: 2 }}>{s.label}</div>
-              </div>
-            ))}
           </div>
         </div>
 

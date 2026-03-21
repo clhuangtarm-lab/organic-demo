@@ -407,9 +407,6 @@ export function loadBadges() {
 }
 export function saveBadges(b) { localStorage.setItem('organic_badges', JSON.stringify(b)) }
 
-export function loadCharacterStage() {
-  return parseInt(localStorage.getItem('organic_character_stage') || '0', 10)
-}
 export function saveCharacterStage(s) {
   localStorage.setItem('organic_character_stage', String(Math.min(9, Math.max(0, s))))
 }
