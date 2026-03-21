@@ -4,7 +4,7 @@ import StatusBar from '../components/StatusBar'
 import TopNav from '../components/TopNav'
 import ProgressBar from '../components/ProgressBar'
 import SproutCharacter from '../components/SproutCharacter'
-import { getScenarioData, loadCharacterStage } from '../data/scenarioData'
+import { getScenarioData, loadBadges, computeCharacterStage } from '../data/scenarioData'
 
 // ──────────────────────────────────────────────
 // Retry screen — shown when NOT all passed
@@ -71,7 +71,7 @@ export default function QuizPage() {
   const navigate  = useNavigate()
   const scenario  = getScenarioData()
   const questions = scenario.quiz
-  const charStage = loadCharacterStage()
+  const charStage = computeCharacterStage(loadBadges())
 
   const [qIdx,       setQIdx]       = useState(0)
   const [scores,     setScores]     = useState([])

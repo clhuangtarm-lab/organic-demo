@@ -424,8 +424,8 @@ export function computeCharacterStage(badges) {
 export function getCharacterStageLabel(stage) {
   if (stage === 0) return '種子'
   if (stage <= 2) return '發芽中'
-  if (stage <= 4) return '長葉中'
-  if (stage <= 7) return '成熟中'
+  if (stage <= 5) return '長葉中'
+  if (stage <= 8) return '成熟中'
   return '開花'
 }
 
