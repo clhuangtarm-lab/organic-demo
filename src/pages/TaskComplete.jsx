@@ -25,17 +25,17 @@ const STAGE_NAMES = [
   '多一片葉子', '長高並穩定', '葉片更完整', '接近成熟', '開花',
 ]
 
-// Per-transition growth messages  (index = oldStage)
+// Per-transition growth messages (index = oldStage → oldStage+1)
 const GROWTH_MSGS = [
-  '小芽芽冒出了第一個小芽！',
-  '小芽芽的芽越來越長了',
-  '小芽芽長出了第一片小葉子！',
-  '小芽芽的葉子越來越大了',
-  '小芽芽多長出了一片葉子！',
-  '小芽芽長高了，更加穩定了',
-  '小芽芽的葉片越來越完整了',
-  '小芽芽快要成熟囉',
-  '小芽芽終於開花了！',
+  '小芽芽冒出了第一個小芽。',    // 0→1
+  '小芽芽又長高了一點。',        // 1→2
+  '小芽芽長出了第一片小葉子。',  // 2→3
+  '小芽芽的葉子變大了。',        // 3→4
+  '小芽芽多長出一片葉子。',      // 4→5
+  '小芽芽長得更高、更穩了。',    // 5→6
+  '小芽芽的葉片更完整了。',      // 6→7
+  '小芽芽已經接近成熟。',        // 7→8
+  '小芽芽終於開花了。',          // 8→9
 ]
 
 const ANIM = `
@@ -262,8 +262,6 @@ export default function TaskComplete() {
     navigate('/coupon-success', { state: { coupon, newStage, newVersion, badgeDef } })
   }
 
-  const growthMsg = GROWTH_MSGS[oldStage] ?? '小芽芽又向前長大了一點'
-
   return (
     <>
       <style>{ANIM}</style>
@@ -303,20 +301,8 @@ export default function TaskComplete() {
                 <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#468f37' }}>
                   {getCharacterStageLabel(newStage)}
                 </div>
-                {/* 本次成長: X → Y */}
-                <div style={{
-                  display: 'inline-flex', alignItems: 'center', gap: 5,
-                  marginTop: 6, background: '#f0f9ec', borderRadius: 999,
-                  padding: '3px 12px', border: '1px solid #c8e6b8'
-                }}>
-                  <span style={{ fontSize: '0.68rem', color: '#6c757d' }}>本次成長</span>
-                  <span style={{ fontSize: '0.72rem', color: '#adb5bd' }}>
-                    {getCharacterStageLabel(oldStage)}
-                  </span>
-                  <span style={{ fontSize: '0.72rem', color: '#468f37', fontWeight: 700 }}>→</span>
-                  <span style={{ fontSize: '0.72rem', color: '#468f37', fontWeight: 700 }}>
-                    {getCharacterStageLabel(newStage)}
-                  </span>
+                <div style={{ fontSize: '0.85rem', color: '#2f6624', marginTop: 6, lineHeight: 1.5 }}>
+                  {GROWTH_MSGS[oldStage] ?? '小芽芽又向前長大了一點。'}
                 </div>
                 <div style={{ fontSize: '0.68rem', color: '#adb5bd', marginTop: 5 }}>
                   成長進度 {newStage} / 9
@@ -328,22 +314,8 @@ export default function TaskComplete() {
           )}
         </div>
 
-        {/* Growth message card */}
-        {overlayDone ? (
-          <div className="tc-fade-up" style={{
-            margin: '18px 20px 0',
-            background: '#f6fbf4', borderRadius: 14, padding: '13px 16px',
-            display: 'flex', alignItems: 'center', gap: 11,
-            border: '1px solid #e2f3dc'
-          }}>
-            <SproutCharacter stage={newStage} size={34} />
-            <p style={{ fontSize: '0.85rem', color: '#495057', lineHeight: 1.6 }}>
-              {growthMsg}
-            </p>
-          </div>
-        ) : (
-          <div style={{ height: 68, margin: '18px 20px 0', opacity: 0 }} />
-        )}
+        {/* Spacer */}
+        <div style={{ height: overlayDone ? 0 : 68, margin: '0 20px' }} />
 
         {/* Badge card */}
         <div style={{ padding: '18px 20px 0' }}>
